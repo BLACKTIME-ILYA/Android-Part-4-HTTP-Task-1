@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intent;
 
-    private final String REGIONS = "regions";
-    private final String SUBREGIONS = "subregions";
-    private final String COUNTRIES = "countries";
-    public static final String INFO = "info";
+    private String regions;
+    private String subregions;
+    private String countries;
+    public static String info;
 
     private RecyclerView list;
     private List<ObjectType> localObjectsType;
@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        regions = getString(R.string.regions_string);
+        subregions = getString(R.string.subregions_string);
+        countries = getString(R.string.сщгтекшуы_string);
+        info = getString(R.string.info_string);
+
         intent = new Intent(this, Main2Activity.class);
 
         list = (RecyclerView) findViewById(R.id.recycler_list);
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void levelsWithRetrofit() {
         if (currentList == null) {
-            currentList = REGIONS;
+            currentList = regions;
             Retrofit.getCountries(new Callback<List<ObjectType>>() {
                 @Override
                 public void success(List<ObjectType> countries, Response response) {
@@ -74,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "something went wrong :(", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else if (currentList.equals(REGIONS)) {
+        } else if (currentList.equals(regions)) {
             L.d("mygetregions");
-            currentList = SUBREGIONS;
+            currentList = subregions;
             Retrofit.getRegion(selectedItem, new Callback<List<ObjectType>>() {
                 @Override
                 public void success(List<ObjectType> region, Response response) {
@@ -91,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "something went wrong :(", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else if (currentList.equals(SUBREGIONS)) {
+        } else if (currentList.equals(subregions)) {
             L.d("mygetsubregions");
-            currentList = COUNTRIES;
+            currentList = countries;
             Retrofit.getSubregion(selectedItem, new Callback<List<ObjectType>>() {
                 @Override
                 public void success(List<ObjectType> objectTypes, Response response) {
@@ -110,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
 
             });
 
-        } else if (currentList.equals(COUNTRIES)) {
+        } else if (currentList.equals(countries)) {
             L.d("mygetcountry");
             Retrofit.getCountry(selectedItem, new Callback<List<ObjectType>>() {
                 @Override
                 public void success(List<ObjectType> objectTypes, Response response) {
-                    intent.putExtra(INFO, objectTypes.get(0));
+                    intent.putExtra(info, objectTypes.get(0));
                     startActivity(intent);
                 }
 
@@ -131,26 +136,26 @@ public class MainActivity extends AppCompatActivity {
 
         for (ObjectType objectType : localObjectsType) {
             if (!currentObjects.isEmpty()) {
-                if (currentList.equals(REGIONS)) {
+                if (currentList.equals(regions)) {
                     if (!currentObjects.contains(objectType.getRegion())) {
                         currentObjects.add(objectType.getRegion());
                     }
 
-                } else if (currentList.equals(SUBREGIONS)) {
+                } else if (currentList.equals(subregions)) {
                     if (!currentObjects.contains(objectType.getSubregion())) {
                         currentObjects.add(objectType.getSubregion());
                     }
-                } else if (currentList.equals(COUNTRIES)) {
+                } else if (currentList.equals(countries)) {
                     if (!currentObjects.contains(objectType.getName())) {
                         currentObjects.add(objectType.getName());
                     }
                 }
             } else {
-                if (currentList.equals(REGIONS)) {
+                if (currentList.equals(regions)) {
                     currentObjects.add(objectType.getRegion());
-                } else if (currentList.equals(SUBREGIONS)) {
+                } else if (currentList.equals(subregions)) {
                     currentObjects.add(objectType.getSubregion());
-                } else if (currentList.equals(COUNTRIES)) {
+                } else if (currentList.equals(countries)) {
                     currentObjects.add(objectType.getName());
                 }
             }
