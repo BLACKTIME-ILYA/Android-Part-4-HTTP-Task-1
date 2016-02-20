@@ -16,4 +16,5 @@
     <string name="capital_string">"capital: "</string>
     <string name="population_string">"population: "</string>
     <string name="area_string">"area: "</string>
+    <string name="languages_text">Languages:</string>
 </resources>
