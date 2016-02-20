@@ -8,17 +8,17 @@ import android.widget.TextView;
 
 import com.sourceit.task1.R;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by User on 15.02.2016.
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> implements View.OnClickListener {
 
-    private ArrayList<String> objects;
+    private LinkedList<String> objects;
     private OnItemClickWatcher<String> watcher;
 
-    public MyRecyclerAdapter(ArrayList<String> objects, OnItemClickWatcher<String> watcher) {
+    public MyRecyclerAdapter(LinkedList<String> objects, OnItemClickWatcher<String> watcher) {
         this.objects = objects;
         this.watcher = watcher;
     }
@@ -46,7 +46,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
 
-        public ViewHolder(View item, final OnItemClickWatcher<String> watcher, final ArrayList<String> objects) {
+        public ViewHolder(View item, final OnItemClickWatcher<String> watcher, final LinkedList<String> objects) {
             super(item);
             name = (TextView) item.findViewById(R.id.object_name);
             item.setOnClickListener(new View.OnClickListener() {
