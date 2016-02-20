@@ -366,8 +366,6 @@ public class MainActivity extends AppCompatActivity {
                 tempCurrentObjects.add(value.getName());
             }
         } else {
-
-            // TODO: 20.02.2016 capital
             if (tempCurrentObjects.contains(value.getName())) {
                 tempCurrentObjects.remove(value.getName());
             }
