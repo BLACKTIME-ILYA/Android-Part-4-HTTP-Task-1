@@ -9,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -53,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private String countries;
     public static String info;
 
-    private Spinner spinner_filter;
+    private RelativeLayout container;
+    //    private Spinner spinner_filter;
     private EditText filter;
     private RecyclerView list;
     private List<ObjectType> localObjectsType;
@@ -92,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
         gson = new Gson();
         intent = new Intent(this, Main2Activity.class);
 
-        spinner_filter = (Spinner) findViewById(R.id.spinner_filter);
+        container = (RelativeLayout) findViewById(R.id.container);
+//        spinner_filter = (Spinner) findViewById(R.id.spinner_filter);
         filter = (EditText) findViewById(R.id.edit_filter);
         list = (RecyclerView) findViewById(R.id.recycler_list);
         currentObjects = new ArrayList<>();
@@ -193,6 +198,29 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (currentList.equals(subregions)) {
             L.d("mygetsubregions");
+
+            Spinner spinner_filter = new Spinner(this);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.addRule(RelativeLayout.ALIGN_PARENT_END);
+            spinner_filter.setLayoutParams(params);
+            container.addView(spinner_filter);
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, filterChooses);
+            spinner_filter.setAdapter(spinnerAdapter);
+
+            spinner_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position,
+                                           long id) {
+                    filterState = filterChooses[position];
+                    L.d("filter state: " + filterState);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
             currentList = countries;
             setList();
 
@@ -343,19 +371,6 @@ public class MainActivity extends AppCompatActivity {
                     list.getAdapter().notifyDataSetChanged();
                 } catch (NumberFormatException e) {
                 }
-            }
-        });
-
-        spinner_filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position,
-                                       long id) {
-                filterState = filterChooses[position];
-                L.d("filter state: " + filterState);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
