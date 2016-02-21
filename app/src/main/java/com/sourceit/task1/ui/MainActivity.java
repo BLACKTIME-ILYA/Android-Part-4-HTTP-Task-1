@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     public static String info;
 
     private RelativeLayout container;
-    //    private Spinner spinner_filter;
     private EditText filter;
     private RecyclerView list;
     private List<ObjectType> localObjectsType;
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, Main2Activity.class);
 
         container = (RelativeLayout) findViewById(R.id.container);
-//        spinner_filter = (Spinner) findViewById(R.id.spinner_filter);
         filter = (EditText) findViewById(R.id.edit_filter);
         list = (RecyclerView) findViewById(R.id.recycler_list);
         currentObjects = new ArrayList<>();
