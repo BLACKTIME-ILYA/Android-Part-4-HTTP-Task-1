@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intent;
     private Gson gson;
+    public static File folder;
 
     private String regions;
     private String subregions;
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     public static String info;
 
     private RelativeLayout container;
-    //    private Spinner spinner_filter;
     private EditText filter;
     private RecyclerView list;
     private List<ObjectType> localObjectsType;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        folder = new File(Environment.getExternalStorageDirectory(), "icons");
+
         regions = getString(R.string.regions_string);
         subregions = getString(R.string.subregions_string);
         countries = getString(R.string.сщгтекшуы_string);
@@ -95,9 +98,13 @@ public class MainActivity extends AppCompatActivity {
 
         gson = new Gson();
         intent = new Intent(this, Main2Activity.class);
+        L.d("folder check: " + folder.isDirectory());
+        if (!folder.isDirectory()) {
+            IconsMaker iconsMaker = new IconsMaker(getAssets(), "icons.zip", folder);
+            iconsMaker.start();
+        }
 
         container = (RelativeLayout) findViewById(R.id.container);
-//        spinner_filter = (Spinner) findViewById(R.id.spinner_filter);
         filter = (EditText) findViewById(R.id.edit_filter);
         list = (RecyclerView) findViewById(R.id.recycler_list);
         currentObjects = new ArrayList<>();
